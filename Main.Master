@@ -1,0 +1,328 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="ServiceDesk.view.Main" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+     <style type="text/css">
+         body input {
+             font-size: 11px!important;
+         }
+
+         a:link, span.MsoHyperlink {
+             text-decoration:none;
+         }
+         a:link {
+             text-decoration:none;
+         }
+         span.MsoHyperlink {
+             text-decoration:none;
+         }
+         a {
+             text-decoration:none;
+         }
+
+         .DivToolTip {
+             display: none;
+             position: absolute;
+             border: 3px solid lightblue;
+             background-color: lightgoldenrodyellow;
+             z-index: 9999;
+             font-family: 'Trebuchet MS';
+             font-weight: bold;
+             font-size: 11px;
+             width: 270px;
+         }
+         #breadcrumb {
+             /*background-color:#ff7900!important;*/
+             background-color: #11b5e0!important;
+
+         }
+         
+         li a:hover {
+                background-color:#ff7900!important;
+         }
+         #logo {
+             background-color:black!important;
+         }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+   <%-- <link href="../plugins/bootstrap.min.css" rel="stylesheet" />--%>
+    <link href="../plugins/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="../plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+      <link href="../css/btnStyles.css" rel="stylesheet" />
+    <link href="../css/tbl.css" rel="stylesheet" />
+     <link href="../plugins/font-awesome.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> 
+    <link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css' />
+    <link href="../css/style.css" rel="stylesheet" />
+    <style>
+        
+    </style>
+    <script type="text/javascript">
+        function OnlyNumbers(ob) {
+            var invalidChars = /[^0-9]/gi
+            if (invalidChars.test(ob.value)) {
+                ob.value = ob.value.replace(invalidChars, "");
+            }
+        }
+
+        function FnShowToolTip(id, msg) {
+            $("#" + id).html(msg);
+            $("#" + id).show();
+        }
+
+        function FnHideToolTip(id) {
+            $("#" + id).hide();
+        }
+
+    </script>
+    <%--  <script src="../plugins/jquery.min.js"></script>
+    <script src="../plugins/bootstrap.min.js"></script>--%>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <!--Start Header-->
+        <div id="screensaver">
+            <canvas id="canvas"></canvas>
+            <i class="fa fa-lock" id="screen_unlock"></i>
+        </div>
+        <div id="modalbox">
+            <div class="devoops-modal">
+                <div class="devoops-modal-header">
+                    <div class="modal-header-name">
+                        <span>Basic table</span>
+                    </div>
+                    <div class="box-icons">
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="devoops-modal-inner">
+                </div>
+                <div class="devoops-modal-bottom">
+                </div>
+            </div>
+        </div>
+        <header class="navbar">
+            <div class="container-fluid expanded-panel">
+                <div class="row">
+                    <div id="logo" class="col-xs-12 col-sm-2">
+                        <a href="DashboardNew.aspx">
+                            <img src="../images/SitelLogo.png" alt="Logo"  style="width: 45px; height: 45px;" /></a>
+                    </div>
+                    <div id="top-panel" class="col-xs-12 col-sm-10">
+                        <div class="row">
+                            <div class="col-xs-8 col-sm-4">
+                                <a href="#" class="show-sidebar">
+                                    <i class="fa fa-bars"></i>
+                                </a>
+                            </div>
+                             
+                            <div class="" style ="margin-right:15px;">
+                                <ul class="nav navbar-nav pull-right panel-menu">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle account" data-toggle="dropdown">
+                                            <div class="avatar" >
+                                                <img src="../images/blank.png" alt="avatar" />
+                                            </div>
+                                            <i class="fa fa-angle-down pull-right"></i>
+                                            <div class="user-mini pull-right">
+                                                <span class="welcome">Welcome,</span>
+                                                <span>
+                                                    <asp:Label ID="LblUserName" runat="server" Text ="dsds"></asp:Label></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                        
+                                            
+                                            <li>
+                                                <a href="Logout.aspx">
+                                                    <i class="fa fa-power-off"></i>
+                                                    <span class="hidden-sm text">Logout</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                             <div class=""  style=" display:none">
+                                <ul class="nav navbar-nav pull-right panel-menu">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle account" data-toggle="dropdown">
+                                            <div class="avatar" >
+                                                <img src="../images/Help.png"  alt="avatar" />
+                                            </div>
+                                            <i class="fa fa-angle-down pull-right"></i>
+                                            <div class="user-mini pull-right">
+                                                <span class="welcome" style ="visibility:hidden;">Help</span>
+                                                
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu"  >
+                                         
+                                            <li>
+                                                    <a class="fancybox fancybox.iframe" href="flowchart.html"><span class="hidden-sm text">Flow Chart</span></a>
+                                            </li>
+                                            <li>
+                                               <a class="fancybox fancybox.iframe" href="Video_Request.html"><span class="hidden-sm text">Video</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!--End Header-->
+        <!--Start Container-->
+        <div id="main" class="container-fluid">
+            <div class="row" >
+                <div id="sidebar-left" class="col-xs-2 col-sm-2" style ="/*background: linear-gradient(275deg, #00188f, #13b5ea, #00b294);*/ background-color:#374958;">
+                    <ul class="nav main-menu">
+                        <li id ="Dashboard" runat ="server" visible ="true">
+                            <a href="DashboardNew.aspx" onclick="window.parent.location='DashboardNew.aspx';">
+                                <i class="fa fa-dashboard"></i>
+                                <span class="hidden-xs" style="font-size:15px !important;">Home</span>
+                            </a>
+                            <ul class="dropdown-menu" style="visibility:hidden;">
+                                <%if (Convert.ToString(Session["UserName"]).ToLower().Equals("dyada011") || Convert.ToString(Session["UserName"]).ToLower().Equals("nsing012") || Convert.ToString(Session["UserName"]).ToLower().Equals("bthak001"))
+                                  { %>
+                                <li><a href="DashboardVP.aspx" onclick="window.parent.location='DashboardVP.aspx';">Dashboard</a></li>
+                                <%}else{ %>
+                                <li><a href="DashboardNew.aspx" onclick="window.parent.location='DashboardNew.aspx';">Dashboard</a></li>
+                                <%} %>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle">
+                                <i class="fa fa-desktop"></i>
+                                <span class="hidden-xs" style="font-size:15px !important;">Tracking Request</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li id ="ViewTicketRequestorData" runat ="server" visible ="false"><a href="ViewTicketRequestorData.aspx" onclick="window.parent.location='ViewTicketRequestorData.aspx';">Requests Status</a></li>
+                                 <li id ="ViewTicketResolveData" runat ="server" visible ="false"><a href="ViewTicketResolveData.aspx" onclick="window.parent.location='ViewTicketResolveData.aspx';">Resolved Ticket</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown" id ="Completed_Report" runat ="server">
+                            <a href="#" class="dropdown-toggle">
+                                <i class="fa fa-desktop"></i>
+                                <span class="hidden-xs" style="font-size:15px !important;">Master</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                  <li id ="StratigicSites_Master" runat ="server" visible ="false"><a href="StratigicSites_Master.aspx" onclick="window.parent.location='StratigicSites_Master.aspx';">Stratigic Site Master</a></li>
+                                <li id ="StratigicPartner_master" runat ="server" visible ="false"><a href="StratigicPartner_master.aspx" onclick="window.parent.location='StratigicPartner_master.aspx';">Stratigic Partner Master</a></li>
+                                <li id ="EmailIDStrategicPartnerMaster" runat ="server" visible ="false"><a href="EmailIDStrategicPartnerMaster.aspx" onclick="window.parent.location='EmailIDStrategicPartnerMaster.aspx';">EmailIDStrategicPartnerMaster </a></li>
+                                <li id ="IssueMaster" runat ="server" visible ="false"><a href="IssueMaster.aspx" onclick="window.parent.location='IssueMaster.aspx';">IssueMaster</a></li> 
+                                 <li id ="AddUser" runat ="server" visible ="false"><a href="AddUser.aspx" onclick="window.parent.location='AddUser.aspx';">Manage Users</a></li>
+                                 <li id ="Mapping_MasterUser" runat ="server" visible ="false"><a href="Mapping_MasterUser.aspx" onclick="window.parent.location='Mapping_MasterUser.aspx';">Mapping Master Users</a></li>
+                                 <li id ="ConvertJsonToCsv" runat ="server" visible ="false"><a href="ConvertJsonToCsv.aspx" onclick="window.parent.location='ConvertJsonToCsv.aspx';">Json To CSV Converter</a></li>
+                            </ul>
+                        </li>
+                          <li class="dropdown" id ="Li1" runat ="server">
+                            <a href="#" class="dropdown-toggle">
+                                <i class="fa fa-desktop"></i>
+                                <span class="hidden-xs" style="font-size:15px !important;">Report</span>
+                            </a>
+                                <ul class="dropdown-menu">
+                                     <li id ="Mapping_MasterReport" runat ="server" visible ="false"><a href="Mapping_MasterReport.aspx" onclick="window.parent.location='Mapping_MasterReport.aspx';">Agents Report</a></li>
+                                     <li id ="Self_PassReport" runat ="server" visible ="false"><a href="Self_PassReport.aspx" onclick="window.parent.location='Self_PassReport.aspx';">Self Password Report</a></li>
+                                    </ul>
+                              </li>
+                         <li class="dropdown" id ="Li2" runat ="server">
+                            <a href="#" class="dropdown-toggle">
+                                <i class="fa fa-link"></i>
+                                <span class="hidden-xs" style="font-size:15px !important;">Useful Links</span>
+                            </a>
+                                <ul class="dropdown-menu">
+                                     <li id ="_Links" runat ="server" visible ="false"><a href="_Links.aspx" onclick="window.parent.location='_Links.aspx';">Useful Links</a></li>
+                                   
+                                    </ul>
+                              </li>
+                    </ul>
+                </div>
+                <!--Start Content-->
+                <div id="content" class="col-xs-12 col-sm-10">
+              
+                    <div id="ajax-content213">
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                </div>
+                <!--End Content-->
+                <script src="../js/respond.min.js"></script>
+            </div>
+        </div>        
+        <!--End Container-->
+    </form>
+    
+  
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <script src="../js/jquery-1.9.1.js"></script>
+    <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../plugins/bootstrap/bootstrap.min.js"></script>
+
+    <!-- All functions for this theme + document.ready processing -->
+   
+    <script src="../js/script.js"></script>
+    <!--ProgressBar-->
+    <script src="../ProgressBar/jquery.min.js"></script>
+    <script src="../ProgressBar/nprogress.js"></script>
+    <link href="../ProgressBar/nprogress.css" rel='stylesheet' />
+ 
+    <script type="text/javascript">
+        //ToolTip Popup
+        //dropdowncontent.init("HrfPopupForecastingServices", "left-top", 500, "mouseover")
+        $(document).ready(function () {
+            $('body').show();
+            NProgress.start();
+            setTimeout(function () { NProgress.done(); $('.fade').removeClass('out'); }, 1000);
+          // FunCreateMenuItem();
+            HighlightMenu();
+
+            $(".fancybox").fancybox({
+                maxWidth: 820,
+                maxHeight: 520,
+                fitToView: false,
+                width: '100%',
+                height: '100%',
+                autoSize: false,
+                closeClick: false,
+                openEffect: 'elastic',
+                closeEffect: 'elastic'
+            });
+        });
+
+      
+        function HighlightMenu() {
+            var str = location.href.toLowerCase();
+            $(".dropdown-menu li a").each(function () {
+                if (str.indexOf(this.href.toLowerCase()) > -1) {
+                    $("li.active").removeClass("active");
+                    $(this).parent().addClass("active");
+                }
+                else {
+                    $(this).parent().removeClass("active");
+                }
+            });
+
+            $("li.active").parents().each(function () {
+                if ($(this).is("li")) {
+                    $(this).addClass("active");
+                }
+                else {
+                    $(this).removeClass("active");
+                }
+            });
+        }
+    </script>
+    <!--ProgressBar-->
+    
+</body>
+</html>
